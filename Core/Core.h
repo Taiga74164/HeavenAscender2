@@ -14,9 +14,9 @@ public:
 		uintptr_t infSyringe;
 		uintptr_t infStamine;
 		uintptr_t infMissionTime;
-		uintptr_t infHealthCheck;
 		uintptr_t infHealth;
-		uintptr_t infStrategems;
+		uintptr_t infStrategems1;
+		uintptr_t infStrategems2;
 		uintptr_t noReload;
 		uintptr_t noRecoil;
 		uintptr_t checkIsBlipSeen;

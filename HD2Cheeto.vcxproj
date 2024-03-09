@@ -74,6 +74,7 @@
     <ClInclude Include="Exports\Resources.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

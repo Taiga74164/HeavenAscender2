@@ -2,36 +2,47 @@
 
 std::unordered_map<void*, Memory::PatchInfo> Memory::patches;
 
-void Memory::PatchBytes(void* address, const char* bytes)
+void Memory::PatchBytes(void* address, const char* bytes, size_t len)
 {
-	// Get the length of the bytes.
-	auto len = strlen(bytes);
-
-	// Store the original bytes.
-	PatchInfo info;
-	info.address = address;
-	info.originalBytes.resize(len);
-	memcpy(info.originalBytes.data(), address, len);
+	auto it = patches.find(address);
+	if (it == patches.end())
+	{
+		// If a patch doesn't exist, create a new one.
+		PatchInfo info;
+		info.address = address;
+		info.originalBytes.resize(len);
+		memcpy(info.originalBytes.data(), address, len);
+		// Store the patch info.
+		patches[address] = info;
+	}
 
 	// Patch the bytes.
 	DWORD oldProtect;
 	VirtualProtect(address, len, PAGE_EXECUTE_READWRITE, &oldProtect);
 	memcpy(address, bytes, len);
 	VirtualProtect(address, len, oldProtect, &oldProtect);
-
-	// Store the patch info.
-	patches[address] = info;
 }
 
-void Memory::NopBytes(void* address, const size_t len)
+void Memory::PatchBytes(uintptr_t address, const char* bytes)
+{
+	PatchBytes(reinterpret_cast<void*>(address), bytes, strlen(bytes));
+}
+
+template <size_t N>
+void Memory::PatchBytes(uintptr_t address, const BYTE(&bytes)[N])
+{
+	PatchBytes(reinterpret_cast<void*>(address), bytes, N);
+}
+
+void Memory::NopBytes(uintptr_t address, const size_t len)
 {
 	std::vector<char> nops(len, 0x90);
-	PatchBytes(address, nops.data());
+	PatchBytes(reinterpret_cast<void*>(address), nops.data(), len);
 }
 
-void Memory::RestoreBytes(void* address)
+void Memory::RestoreBytes(uintptr_t address)
 {
-	auto it = patches.find(address);
+	auto it = patches.find(reinterpret_cast<void*>(address));
 	if (it != patches.end())
 	{
 		// Restore the original bytes.
@@ -132,4 +143,80 @@ void* Memory::AllocateNearbyMemory(uintptr_t address, size_t size)
 	return VirtualAlloc(nullptr, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 }
 
+void Memory::CreateTrampoline(uintptr_t address, void* destination, size_t length)
+{
+	// Check if the length is at least 14 bytes.
+	if (length < 14) return;
 
+	// Create a byte array based on the length.
+	std::vector<BYTE> trampoline(length, 0x90);
+
+	// Set the jmp [rip] opcode.
+	trampoline[0] = 0xFF;
+	trampoline[1] = 0x25;
+	memset(&trampoline[2], 0, 4);
+
+	// Copy the destination address to the place holder of the trampoline.
+	memcpy(&trampoline[6], &destination, 8);
+
+	auto it = patches.find(reinterpret_cast<void*>(address));
+	if (it != patches.end())
+	{
+		// If a patch already exists, update the info with the new trampoline.
+		it->second.hasTrampoline = true;
+		it->second.trampolineDestination = destination;
+	}
+	else
+	{
+		// If a patch doesn't exist, create a new one.
+		PatchInfo info;
+		info.address = reinterpret_cast<void*>(address);
+		info.originalBytes.resize(length);
+		memcpy(info.originalBytes.data(), reinterpret_cast<void*>(address), length);
+		info.hasTrampoline = true;
+		info.trampolineDestination = destination;
+		// Store the patch info.
+		patches[reinterpret_cast<void*>(address)] = info;
+	}
+
+	// Patch the original function with the trampoline.
+	PatchBytes(reinterpret_cast<void*>(address), reinterpret_cast<const char*>(trampoline.data()), trampoline.size());
+}
+
+void Memory::RemoveTrampoline(uintptr_t address)
+{
+	auto it = patches.find(reinterpret_cast<void*>(address));
+	if (it != patches.end())
+	{
+		if (!it->second.hasTrampoline) return;
+
+		// Free the allocated memory for the trampoline.
+		VirtualFree(it->second.trampolineDestination, 0, MEM_RELEASE);
+
+		// Restore the original bytes.
+		RestoreBytes(reinterpret_cast<uintptr_t>(it->second.address));
+	}
+}
+
+void Memory::WriteInstructions(void* destination, const BYTE instructions[], size_t instructionLen, uintptr_t retAddress)
+{
+	// Calculate the length of the instructions plus the far jump.
+	auto length = instructionLen + 14;
+
+	// Create a buffer to store the instructions and the far jump.
+	std::vector<BYTE> buffer(length, 0x00);
+
+	// Copy the instructions to the buffer.
+	memcpy(buffer.data(), instructions, instructionLen);
+
+	// Set the far jump.
+	buffer[instructionLen] = 0xFF;
+	buffer[instructionLen + 1] = 0x25;
+	memset(&buffer[instructionLen + 2], 0, 4);
+
+	// Copy the return address to the place holder of the far jump.
+	memcpy(&buffer[instructionLen + 6], &retAddress, 8);
+
+	// Write the buffer to the trampoline.
+	memcpy(destination, buffer.data(), length);
+}
