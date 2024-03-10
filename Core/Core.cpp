@@ -10,7 +10,7 @@
 		auto allocMemory = Memory::AllocateNearbyMemory(ADDRESS, sizeof INSTRUCTIONS + 14); \
 		Memory::CreateTrampoline(ADDRESS, allocMemory, TRAMPOLINE_LENGTH); \
 		Memory::WriteInstructions(allocMemory, INSTRUCTIONS, sizeof INSTRUCTIONS, ADDRESS + TRAMPOLINE_LENGTH); \
-	} while (0)
+	} while (false)
 
 Core::Cheat cheat;
 
@@ -18,23 +18,23 @@ void Core::InitializeCheat()
 {
 	auto gameHandle = reinterpret_cast<uintptr_t>(GetModuleHandleA("game.dll"));
 
-	LOG("[HD2Cheeto] Found game handle! Getting module information...");
+	LOG("[HeavenAscender2] Found game handle! Getting module information...");
 
 	MODULEINFO moduleInfo;
 	bool success = GetModuleInformation(GetCurrentProcess(), (HMODULE)gameHandle, &moduleInfo, sizeof(moduleInfo));
 	if (!success)
 	{
-		LOG("[HD2Cheeto] Failed to get module information. Stopping...");
+		LOG("[HeavenAscender2] Failed to get module information. Stopping...");
 		return;
 	}
 
 	cheat.baseAddress = gameHandle;
 	cheat.size = moduleInfo.SizeOfImage;
 
-	LOG("[HD2Cheeto] Found game.dll at base address 0x%s, size %s.", std::format("{:X}", cheat.baseAddress), std::to_string(cheat.size));
+	LOG("[HeavenAscender2] Found game.dll at base address 0x%s, size %s.", std::format("{:X}", cheat.baseAddress), std::to_string(cheat.size));
 
-	LOG("[HD2Cheeto] Press F1 to activate all cheats");
-	LOG("[HD2Cheeto] Press F2 to deactivate all cheats");
+	LOG("[HeavenAscender2] Press F1 to activate all cheats");
+	LOG("[HeavenAscender2] Press F2 to deactivate all cheats");
 
 	cheat.infGrenades = Memory::PatternScan(gameHandle, "41 ff 08 4a 8b 84 ed");
 	cheat.infAmmo = Memory::PatternScan(gameHandle, "41 83 2c c2");
@@ -48,16 +48,6 @@ void Core::InitializeCheat()
 	// last mov [r8],ebp
 	cheat.noReload = Memory::PatternScan(gameHandle, "41 89 28 49 8B 84 CA 28 20 00 00 8B 48 10");
 
-	//LOG("cheat.infGrenades = %p", cheat.infGrenades);
-	//LOG("cheat.infAmmo = %p", cheat.infAmmo);
-	//LOG("cheat.infSyringe = %p", cheat.infSyringe);
-	//LOG("cheat.infStamine = %p", cheat.infStamine);
-	//LOG("cheat.infMissionTime = %p", cheat.infMissionTime);
-	//LOG("cheat.infHealth = %p", cheat.infHealth);
-	//LOG("cheat.infStrategems1 = %p", cheat.infStrategems1);
-	//LOG("cheat.infStrategems2 = %p", cheat.infStrategems2);
-	//LOG("cheat.noReload = %p", cheat.noReload);
-
 	//cheat.noRecoil = Memory::PatternScan(gameHandle, "75 ? 45 8b c7 8b d3");
 	//cheat.checkIsBlipSeen = Memory::PatternScan(gameHandle, "41 0f b6 44 97");
 	//cheat.checkIfAlienHivesAreObstructed = Memory::PatternScan(gameHandle, "41 80 be ? ? ? ? ? 0f 85 ? ? ? ? 80 be");
@@ -70,7 +60,7 @@ void Core::Start()
 {
 	while (!GetModuleHandleA("game.dll"))
 	{
-		LOG("[HD2Cheeto] game handle not found, waiting 3 seconds...");
+		LOG("[HeavenAscender2] game handle not found, waiting 3 seconds...");
 		Sleep(3000);
 	}
 
@@ -130,7 +120,7 @@ void Core::Start()
 			//Memory::PatchBytes(cheat.getMinorInterestBlipIcon, "\xEB\x09");
 			//Memory::PatchBytes(cheat.checkMissionBlip, "\x90\xE9");
 
-			LOG("[HD2Cheeto] All Cheats enabled!");
+			LOG("[HeavenAscender2] All Cheats enabled!");
 
 			cheat.cheatsEnabled = true;
 		}
@@ -144,7 +134,7 @@ void Core::Start()
 			Memory::RemoveTrampoline(cheat.infHealth);
 			Memory::RestoreBytes(cheat.noReload);
 
-			LOG("[HD2Cheeto] All Cheats disabled!");
+			LOG("[HeavenAscender2] All Cheats disabled!");
 
 			cheat.cheatsEnabled = false;
 		}
@@ -161,7 +151,7 @@ void Core::Initialize(HINSTANCE hModule)
 
 	Utils::AttachConsole();
 
-	LOG("[HD2Cheeto] Initializing...");
+	LOG("[HeavenAscender2] Initializing...");
 	// Get execution path
 	std::vector<char> pathBuf;
 	DWORD             copied = 0;
@@ -218,7 +208,7 @@ void Core::Initialize(HINSTANCE hModule)
 
 	CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)Start, hModule, 0, nullptr);
 
-	LOG("[HD2Cheeto] Created Thread.");
+	LOG("[HeavenAscender2] Created Thread.");
 }
 
 HMODULE Core::LoadOriginalProxy(const std::filesystem::path& proxyFilepath, const std::wstring& proxyFilepathNoExt)
@@ -252,14 +242,14 @@ std::filesystem::path Core::GetModuleFilePath(HMODULE moduleHandle)
 
 void Core::Error(const std::string& reason, const bool shouldKill)
 {
-	MessageBoxA(nullptr, (reason + " " + (shouldKill ? "Preventing Startup" : "Continuing without HD2Cheeto") + "...").c_str(), "HD2Cheeto",
+	MessageBoxA(nullptr, (reason + " " + (shouldKill ? "Preventing Startup" : "Continuing without HeavenAscender2") + "...").c_str(), "HeavenAscender2",
 		MB_ICONERROR | MB_OK);
 	if (shouldKill) KillProcess();
 }
 
 void Core::Error(const std::wstring& reason, const bool shouldKill)
 {
-	MessageBoxW(nullptr, (reason + L" " + (shouldKill ? L"Preventing Startup" : L"Continuing without HD2Cheeto") + L"...").c_str(), L"HD2Cheeto",
+	MessageBoxW(nullptr, (reason + L" " + (shouldKill ? L"Preventing Startup" : L"Continuing without HeavenAscender2") + L"...").c_str(), L"HeavenAscender2",
 		MB_ICONERROR | MB_OK);
 	if (shouldKill) KillProcess();
 }

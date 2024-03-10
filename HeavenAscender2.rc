@@ -68,11 +68,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "GitHub: Taiga74164"
-            VALUE "FileDescription", "Hell Divers 2 Cheat"
+            VALUE "FileDescription", "HeavenAscender2 Cheat"
             VALUE "FileVersion", "1.0.0.0"
-            VALUE "InternalName", "HD2Cheeto.dll"
-            VALUE "OriginalFilename", "HD2Cheeto.dll"
-            VALUE "ProductName", "HD2Cheeto"
+            VALUE "InternalName", "HeavenAscender2.dll"
+            VALUE "OriginalFilename", "HeavenAscender2.dll"
+            VALUE "ProductName", "HeavenAscender2"
             VALUE "ProductVersion", "1.0.0.0"
         END
     END

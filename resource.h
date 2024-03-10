@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by HD2Cheeto.rc
+// Used by HeavenAscender2.rc
 //
 #define IDR_ACCELERATOR1                101
 
