@@ -17,6 +17,7 @@ public:
 	static void CreateTrampoline(uintptr_t address, void* destination, size_t length);
 	static void RemoveTrampoline(uintptr_t address);
 	static void WriteInstructions(void* destination, const BYTE instructions[], size_t instructionLen, uintptr_t retAddress);
+	static void RestoreAllPatches();
 
 private:
 	struct PatchInfo {

@@ -17,8 +17,13 @@ public:
 		uintptr_t infHealth;
 		uintptr_t infStrategems1;
 		uintptr_t infStrategems2;
+		uintptr_t infSpecialWeapon;
+		uintptr_t infBackpack;
+		uintptr_t infRailGun;
 		uintptr_t noReload;
 		uintptr_t noRecoil;
+		uintptr_t noLaserOverheat;
+		uintptr_t maxResources;
 		uintptr_t checkIsBlipSeen;
 		uintptr_t checkIfAlienHivesAreObstructed;
 		uintptr_t checkIfMinorInterestBlipIsDiscovered;

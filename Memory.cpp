@@ -220,3 +220,15 @@ void Memory::WriteInstructions(void* destination, const BYTE instructions[], siz
 	// Write the buffer to the trampoline.
 	memcpy(destination, buffer.data(), length);
 }
+
+void Memory::RestoreAllPatches()
+{
+	// Iterate through all the patches and restore them.
+	for (auto& patch : patches)
+	{
+		if (patch.second.hasTrampoline)
+			RemoveTrampoline(reinterpret_cast<uintptr_t>(patch.second.address));
+		else 
+			RestoreBytes(reinterpret_cast<uintptr_t>(patch.second.address));
+	}
+}

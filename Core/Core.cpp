@@ -44,11 +44,15 @@ void Core::InitializeCheat()
 	cheat.infHealth = Memory::PatternScan(gameHandle, "41 8b 84 8b ? ? ? ? 48 8b 5c 24");
 	cheat.infStrategems1 = Memory::PatternScan(gameHandle, "0f 86 ? ? ? ? 0f 29 78 ? f3 0f 10 3d ? ? ? ? 44 0f 29 40");
 	cheat.infStrategems2 = Memory::PatternScan(gameHandle, "f3 48 0f 2c c8 48 03 48 ? 48 89 8c 37 ? ? ? ? 8b 8c 37 ? ? ? ? 8d 41 ? 83 f8 ? 77 ? 8d 41 ? 89 84 37 ? ? ? ? 45 33 c9");
+	cheat.infSpecialWeapon = Memory::PatternScan(gameHandle, "44 89 7f ? 41 80 bc 24");
+	cheat.infBackpack = Memory::PatternScan(gameHandle, "2B C6 4D 8D 85 48 04 00 00");
+	cheat.infRailGun = Memory::PatternScan(gameHandle, "f3 43 0f 11 84 37 ? ? ? ? 84 c9");
 	// fn: 40 55 48 83 ec ? 3b 15 ? ? ? ? 41 8b e8 4c 8b 15 ? ? ? ? 0f 84 ? ? ? ? 45 8b 8a ? ? ? ? 45 33 c0 45 8b 9a ? ? ? ? 48 89 5c 24 ? 48 89 74 24 ? 44 0f af da 41 8d 71 ? 48 89 7c 24 ? 45 85 c9 74 ? 49 8b 9a ? ? ? ? 41 8b ba ? ? ? ? 66 0f 1f 84 00 ? ? ? ? 8b c6 43 8d 0c 18 48 23 c8 48 8d 04 cb 8b 0c cb 3b cf 74 ? 3b ca 74 ? 41 ff c0 45 3b c1 72 ? 33 c0 48 8b 7c 24 ? 48 8b 74 24 ? 48 8b 5c 24 ? 39 10 75 ? 8b 40 ? eb ? b8 ? ? ? ? 8b c8 ba
 	// last mov [r8],ebp
 	cheat.noReload = Memory::PatternScan(gameHandle, "41 89 28 49 8B 84 CA 28 20 00 00 8B 48 10");
-
-	//cheat.noRecoil = Memory::PatternScan(gameHandle, "75 ? 45 8b c7 8b d3");
+	cheat.noRecoil = Memory::PatternScan(gameHandle, "75 ? 45 8b c7 8b d3");
+	cheat.noLaserOverheat = Memory::PatternScan(gameHandle, "f3 0f 11 09 4c 8b c1 49 8b 84 df");
+	cheat.maxResources = Memory::PatternScan(gameHandle, "45 01 b4 8a ? ? ? ? 48 8d 82");
 	//cheat.checkIsBlipSeen = Memory::PatternScan(gameHandle, "41 0f b6 44 97");
 	//cheat.checkIfAlienHivesAreObstructed = Memory::PatternScan(gameHandle, "41 80 be ? ? ? ? ? 0f 85 ? ? ? ? 80 be");
 	//cheat.checkIfMinorInterestBlipIsDiscovered = Memory::PatternScan(gameHandle, "0f 85 ? ? ? ? 48 8b 44 24 ? 80 78 ? ? 0f 84 ? ? ? ? f3 0f 5c 7d");
@@ -107,11 +111,40 @@ void Core::Start()
 			//Memory::PatchBytes((cheat.infStrategems1 + 0x1E), "\x89\x84\x3E\xD0\x01\x00\x00");
 			//Memory::PatchBytes((cheat.infStrategems1 + 0x1b), "\x8D\x01\x90");
 
+			// Infinite Special Weapon
+			Memory::NopBytes(cheat.infSpecialWeapon, 4);
+
+			// Infinite Backpack
+			Memory::NopBytes(cheat.infBackpack, 2);
+
+			// Infinite Rail Gun
+			BYTE infRailGunBytes[] =
+			{
+				0x43, 0xC7, 0x84, 0x3E, 0x2C, 0x2C, 0x00, 0x00, 0xFC, 0xFF, 0x3F, 0x40, // mov [r14+r15+00002C2C],403FFFFC { 3.00 }
+				0xF3, 0x43, 0x0F, 0x10, 0x84, 0x3E, 0x2C, 0x2C, 0x00, 0x00,				// movss xmm0,[r14+r15+00002C2C]
+			};
+
+			AUTO_ASSEMBLE_TRAMPOLINE(cheat.infRailGun, 14, infRailGunBytes);
+
 			// No Reload
 			Memory::NopBytes(cheat.noReload, 3);
 
 			// No Recoil
-			//Memory::PatchBytes(cheat.noRecoil, "\x74");
+			Memory::PatchBytes(cheat.noRecoil, "\xEB");
+
+			// No Laser Overheat
+			Memory::NopBytes(cheat.noLaserOverheat, 4);
+
+			// Max Resources
+			BYTE maxResourcesBytes[] =
+			{
+				0x41, 0x81, 0x84, 0x8A, 0xEC, 0x17, 0x00, 0x00, 0xF3, 0x01, 0x00, 0x00, // add [r10+rcx*4+000017EC],000001F3 { 499 }
+				0x41, 0x81, 0x84, 0x8A, 0xF0, 0x17, 0x00, 0x00, 0xF9, 0x00, 0x00, 0x00, // add [r10+rcx*4+000017F0],000000F9 { 249 }
+				0x41, 0x83, 0x84, 0x8A, 0xF4, 0x17, 0x00, 0x00, 0x63,					// add dword ptr [r10+rcx*4+000017F4],63 { 99 }
+				0x48, 0x8D, 0x82, 0x99, 0x00, 0x00, 0x00,								// lea rax,[rdx+00000099]
+			};
+
+			AUTO_ASSEMBLE_TRAMPOLINE(cheat.maxResources, 15, maxResourcesBytes);
 
 			// Show Map Icons
 			//Memory::PatchBytes(cheat.checkIsBlipSeen, "\xB8\x01\x00\x00\x00\x90");
@@ -126,13 +159,7 @@ void Core::Start()
 		}
 		else if (GetAsyncKeyState(VK_F2) & 0x8000 && cheat.cheatsEnabled)
 		{
-			Memory::RestoreBytes(cheat.infGrenades);
-			Memory::RestoreBytes(cheat.infAmmo);
-			Memory::RestoreBytes(cheat.infSyringe);
-			Memory::RestoreBytes(cheat.infStamine);
-			Memory::RestoreBytes(cheat.infMissionTime);
-			Memory::RemoveTrampoline(cheat.infHealth);
-			Memory::RestoreBytes(cheat.noReload);
+			Memory::RestoreAllPatches();
 
 			LOG("[HeavenAscender2] All Cheats disabled!");
 
