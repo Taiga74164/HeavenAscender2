@@ -1,0 +1,3 @@
+[submodule "vendor/CommandMenu"]
+	path = vendor/CommandMenu
+	url = https://github.com/Taiga74164/CommandMenu

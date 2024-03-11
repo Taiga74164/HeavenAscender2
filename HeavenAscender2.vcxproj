@@ -46,7 +46,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\CommandMenu\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -67,6 +67,12 @@
     <ClCompile Include="Exports\Exports.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\Menu.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\SliderFloat.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\SliderInt.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\Tab.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\Text.cpp" />
+    <ClCompile Include="vendor\CommandMenu\src\Toggle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Core.h" />
@@ -76,6 +82,14 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="vendor\CommandMenu\include\CommandMenu.h" />
+    <ClInclude Include="vendor\CommandMenu\include\ElementBase.h" />
+    <ClInclude Include="vendor\CommandMenu\include\Menu.h" />
+    <ClInclude Include="vendor\CommandMenu\include\SliderFloat.h" />
+    <ClInclude Include="vendor\CommandMenu\include\SliderInt.h" />
+    <ClInclude Include="vendor\CommandMenu\include\Tab.h" />
+    <ClInclude Include="vendor\CommandMenu\include\Text.h" />
+    <ClInclude Include="vendor\CommandMenu\include\Toggle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HeavenAscender2.rc" />
