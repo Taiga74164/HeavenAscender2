@@ -3,6 +3,13 @@
 #include <vector>
 #include <Windows.h>
 
+#define AUTO_ASSEMBLE_TRAMPOLINE(ADDRESS, TRAMPOLINE_LENGTH, INSTRUCTIONS) \
+do { \
+auto allocMemory = Memory::AllocateNearbyMemory(ADDRESS, sizeof INSTRUCTIONS + 14); \
+Memory::CreateTrampoline(ADDRESS, allocMemory, TRAMPOLINE_LENGTH); \
+Memory::WriteInstructions(allocMemory, INSTRUCTIONS, sizeof INSTRUCTIONS, ADDRESS + TRAMPOLINE_LENGTH); \
+} while (false)
+
 class Memory
 {
 public:

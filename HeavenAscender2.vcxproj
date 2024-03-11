@@ -62,6 +62,21 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cheat\CheatData.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteAmmo.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteBackpack.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteGrenade.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteHealth.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteMissionTime.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteRailGun.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteSpecialWeapon.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteStamina.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteStratagems.cpp" />
+    <ClCompile Include="Cheat\Features\InfiniteSyringe.cpp" />
+    <ClCompile Include="Cheat\Features\MaxResources.cpp" />
+    <ClCompile Include="Cheat\Features\NoLaserOverheat.cpp" />
+    <ClCompile Include="Cheat\Features\NoRecoil.cpp" />
+    <ClCompile Include="Cheat\Features\NoReload.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Exports\Exports.cpp" />
@@ -75,6 +90,22 @@
     <ClCompile Include="vendor\CommandMenu\src\Toggle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cheat\CheatData.h" />
+    <ClInclude Include="Cheat\FeatureBase.h" />
+    <ClInclude Include="Cheat\Features\InfiniteAmmo.h" />
+    <ClInclude Include="Cheat\Features\InfiniteBackpack.h" />
+    <ClInclude Include="Cheat\Features\InfiniteGrenade.h" />
+    <ClInclude Include="Cheat\Features\InfiniteHealth.h" />
+    <ClInclude Include="Cheat\Features\InfiniteMissionTime.h" />
+    <ClInclude Include="Cheat\Features\InfiniteRailGun.h" />
+    <ClInclude Include="Cheat\Features\InfiniteSpecialWeapon.h" />
+    <ClInclude Include="Cheat\Features\InfiniteStamina.h" />
+    <ClInclude Include="Cheat\Features\InfiniteStratagems.h" />
+    <ClInclude Include="Cheat\Features\InfiniteSyringe.h" />
+    <ClInclude Include="Cheat\Features\MaxResources.h" />
+    <ClInclude Include="Cheat\Features\NoLaserOverheat.h" />
+    <ClInclude Include="Cheat\Features\NoRecoil.h" />
+    <ClInclude Include="Cheat\Features\NoReload.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Exports\Exports.h" />
     <ClInclude Include="Exports\Resources.h" />

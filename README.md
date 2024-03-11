@@ -3,12 +3,19 @@
 I made this cheat while I was in class so currently, all features will activate when F1 is pressed. I unfortunately dont have the time to add extra features like config, gui, etc.
 
 ### Features
-- Infinite Grenades
 - Infinite Ammo
-- Infinite Syringe
-- Infinite Mission Time
+- Infinite Backpack
+- Infinite Grenade
 - Infinite Health
-- Infinite Strategems
+- Infinite Mission Time
+- Infinite Rail Gun
+- Infinite Special Weapon
+- Infinite Stamina
+- Infinite Stratagems
+- Infinite Syringe
+- Max Resources
+- No Laser Overheat
+- No Recoil
 - No Reload
 
 ### Building
