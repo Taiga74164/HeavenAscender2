@@ -14,6 +14,7 @@ I made this cheat while I was in class so currently, all features will activate 
 - Infinite Stratagems
 - Infinite Syringe
 - Max Resources
+- No Aggro
 - No Laser Overheat
 - No Recoil
 - No Reload

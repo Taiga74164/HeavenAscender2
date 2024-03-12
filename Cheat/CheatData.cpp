@@ -10,7 +10,8 @@ void Cheat::InitCheat(CheatData& cheatData)
 	cheatData.infAmmo = Memory::PatternScan(gameHandle, "41 83 2c c2");
 	cheatData.infBackpack = Memory::PatternScan(gameHandle, "2B C6 4D 8D 85 48 04 00 00");
 	cheatData.infGrenades = Memory::PatternScan(gameHandle, "41 ff 08 4a 8b 84 ed");
-	cheatData.infHealth = Memory::PatternScan(gameHandle, "41 8b 84 8b ? ? ? ? 48 8b 5c 24");
+	cheatData.infHealth1 = Memory::PatternScan(gameHandle, "45 89 38 49 8b 84 de");
+	cheatData.infHealth2 = Memory::PatternScan(gameHandle, "41 8b 84 8b ? ? ? ? 48 8b 5c 24");
 	cheatData.infMissionTime = Memory::PatternScan(gameHandle, "f3 43 0f 11 84 f4");
 	cheatData.infRailGun = Memory::PatternScan(gameHandle, "f3 43 0f 11 84 37 ? ? ? ? 84 c9");
 	cheatData.infSpecialWeapon = Memory::PatternScan(gameHandle, "44 89 7f ? 41 80 bc 24");
@@ -19,6 +20,7 @@ void Cheat::InitCheat(CheatData& cheatData)
 	cheatData.infStratagems2 = Memory::PatternScan(gameHandle, "f3 48 0f 2c c8 48 03 48 ? 48 89 8c 37 ? ? ? ? 8b 8c 37 ? ? ? ? 8d 41 ? 83 f8 ? 77 ? 8d 41 ? 89 84 37 ? ? ? ? 45 33 c9");
 	cheatData.infSyringe = Memory::PatternScan(gameHandle, "41 ff cf 3b c2 74 ?");
 	cheatData.maxResources = Memory::PatternScan(gameHandle, "45 01 b4 8a ? ? ? ? 48 8d 82");
+	cheatData.noAggro = Memory::PatternScan(gameHandle, "74 ? 45 8b 81 ? ? ? ? 45 85 c0");
 	// fn: 40 55 48 83 ec ? 3b 15 ? ? ? ? 41 8b e8 4c 8b 15 ? ? ? ? 0f 84 ? ? ? ? 45 8b 8a ? ? ? ? 45 33 c0 45 8b 9a ? ? ? ? 48 89 5c 24 ? 48 89 74 24 ? 44 0f af da 41 8d 71 ? 48 89 7c 24 ? 45 85 c9 74 ? 49 8b 9a ? ? ? ? 41 8b ba ? ? ? ? 66 0f 1f 84 00 ? ? ? ? 8b c6 43 8d 0c 18 48 23 c8 48 8d 04 cb 8b 0c cb 3b cf 74 ? 3b ca 74 ? 41 ff c0 45 3b c1 72 ? 33 c0 48 8b 7c 24 ? 48 8b 74 24 ? 48 8b 5c 24 ? 39 10 75 ? 8b 40 ? eb ? b8 ? ? ? ? 8b c8 ba
 	// last mov [r8],ebp
 	cheatData.noLaserOverheat = Memory::PatternScan(gameHandle, "f3 0f 11 09 4c 8b c1 49 8b 84 df");

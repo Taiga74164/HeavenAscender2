@@ -18,6 +18,7 @@
 #include "Cheat/Features/InfiniteStratagems.h"
 #include "Cheat/Features/InfiniteSyringe.h"
 #include "Cheat/Features/MaxResources.h"
+#include "Cheat/Features/NoAggro.h"
 #include "Cheat/Features/NoLaserOverheat.h"
 #include "Cheat/Features/NoRecoil.h"
 #include "Cheat/Features/NoReload.h"
@@ -55,6 +56,7 @@ void Core::Start()
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteStratagems, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteSyringe, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::MaxResources, cheatData);
+	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoAggro, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoLaserOverheat, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoRecoil, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoReload, cheatData);

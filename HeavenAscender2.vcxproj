@@ -74,6 +74,7 @@
     <ClCompile Include="Cheat\Features\InfiniteStratagems.cpp" />
     <ClCompile Include="Cheat\Features\InfiniteSyringe.cpp" />
     <ClCompile Include="Cheat\Features\MaxResources.cpp" />
+    <ClCompile Include="Cheat\Features\NoAggro.cpp" />
     <ClCompile Include="Cheat\Features\NoLaserOverheat.cpp" />
     <ClCompile Include="Cheat\Features\NoRecoil.cpp" />
     <ClCompile Include="Cheat\Features\NoReload.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Cheat\Features\InfiniteStratagems.h" />
     <ClInclude Include="Cheat\Features\InfiniteSyringe.h" />
     <ClInclude Include="Cheat\Features\MaxResources.h" />
+    <ClInclude Include="Cheat\Features\NoAggro.h" />
     <ClInclude Include="Cheat\Features\NoLaserOverheat.h" />
     <ClInclude Include="Cheat\Features\NoRecoil.h" />
     <ClInclude Include="Cheat\Features\NoReload.h" />

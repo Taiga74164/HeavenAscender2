@@ -9,7 +9,8 @@ namespace Cheat
 		uintptr_t infAmmo;
 		uintptr_t infBackpack;
 		uintptr_t infGrenades;
-		uintptr_t infHealth;
+		uintptr_t infHealth1;
+		uintptr_t infHealth2;
 		uintptr_t infMissionTime;
 		uintptr_t infRailGun;
 		uintptr_t infSpecialWeapon;
@@ -18,6 +19,7 @@ namespace Cheat
 		uintptr_t infStratagems2;
 		uintptr_t infSyringe;
 		uintptr_t maxResources;
+		uintptr_t noAggro;
 		uintptr_t noLaserOverheat;
 		uintptr_t noRecoil;
 		uintptr_t noReload;
