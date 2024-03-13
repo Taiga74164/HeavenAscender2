@@ -27,10 +27,9 @@ void Cheat::InitCheat(CheatData& cheatData)
 	cheatData.noLaserOverheat = Memory::PatternScan(gameHandle, "f3 0f 11 09 4c 8b c1 49 8b 84 df");
 	cheatData.noRecoil = Memory::PatternScan(gameHandle, "75 ? 45 8b c7 8b d3");
 	cheatData.noReload = Memory::PatternScan(gameHandle, "41 89 28 49 8B 84 CA 28 20 00 00 8B 48 10");
-	
-	cheatData.checkIsBlipSeen = Memory::PatternScan(gameHandle, "41 0f b6 44 97");
-	cheatData.checkIfAlienHivesAreObstructed = Memory::PatternScan(gameHandle, "41 80 be ? ? ? ? ? 0f 85 ? ? ? ? 80 be");
-	cheatData.checkIfMinorInterestBlipIsDiscovered = Memory::PatternScan(gameHandle, "0f 85 ? ? ? ? 48 8b 44 24 ? 80 78 ? ? 0f 84 ? ? ? ? f3 0f 5c 7d");
-	cheatData.getMinorInterestBlipIcon = Memory::PatternScan(gameHandle, "0f 84 ? ? ? ? 48 8b 4c 24 ? f3 41 0f 10 4f");
-	cheatData.checkMissionBlip = Memory::PatternScan(gameHandle, "0f 85 ? ? ? ? 49 8d b8");
+	cheatData.showMapCheckIsBlipSeen = Memory::PatternScan(gameHandle, "41 0f b6 44 97");
+	cheatData.showMapCheckAlienHives = Memory::PatternScan(gameHandle, "41 80 be ? ? ? ? ? 0f 85 ? ? ? ? 80 be");
+	cheatData.showMapCheckMinorInterest = Memory::PatternScan(gameHandle, "0f 85 ? ? ? ? 48 8b 44 24 ? 80 78 ? ? 0f 84 ? ? ? ? f3 0f 5c 7d");
+	cheatData.showMapGetMinorInterest = Memory::PatternScan(gameHandle, "0f 84 ? ? ? ? 48 8b 4c 24 ? f3 41 0f 10 4f");
+	cheatData.showMapCheckMissionBlip = Memory::PatternScan(gameHandle, "0f 85 ? ? ? ? 49 8d b8");
 }

@@ -79,6 +79,7 @@
     <ClCompile Include="Cheat\Features\NoLaserOverheat.cpp" />
     <ClCompile Include="Cheat\Features\NoRecoil.cpp" />
     <ClCompile Include="Cheat\Features\NoReload.cpp" />
+    <ClCompile Include="Cheat\Features\ShowMapIcons.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Exports\Exports.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Cheat\Features\NoLaserOverheat.h" />
     <ClInclude Include="Cheat\Features\NoRecoil.h" />
     <ClInclude Include="Cheat\Features\NoReload.h" />
+    <ClInclude Include="Cheat\Features\ShowMapIcons.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Exports\Exports.h" />
     <ClInclude Include="Exports\Resources.h" />

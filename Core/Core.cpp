@@ -23,6 +23,7 @@
 #include "Cheat/Features/NoLaserOverheat.h"
 #include "Cheat/Features/NoRecoil.h"
 #include "Cheat/Features/NoReload.h"
+#include "Cheat/Features/ShowMapIcons.h"
 
 std::vector<std::shared_ptr<Cheat::FeatureBase>> Core::m_features;
 
@@ -70,12 +71,12 @@ void Core::Start()
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteSyringe, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::MaxSpeed, cheatData);
 	ADD_FEATURE_SLIDER_FLOAT(featuresTab, Cheat::Features::MaxSpeed, cheatData, &cheatData.maxSpeedValue, 1.0f, 10.0f, 0.5f);
-	
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::MaxResources, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoAggro, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoLaserOverheat, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoRecoil, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoReload, cheatData);
+	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::ShowMapIcons, cheatData);
 	// About tab content
 	aboutTab->AddElement(std::make_unique<CommandMenu::Text>("Credits to:"));
 	aboutTab->AddElement(std::make_unique<CommandMenu::Text>("- Taiga74164"));
@@ -90,9 +91,7 @@ void Core::Start()
 	{
 		menu.ProcessInput();
 		for (const auto& features : m_features)
-		{
 			features->Update();
-		}
 		
 		Sleep(50);
 	}

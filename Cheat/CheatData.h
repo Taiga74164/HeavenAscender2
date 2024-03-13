@@ -25,11 +25,11 @@ namespace Cheat
 		uintptr_t noLaserOverheat;
 		uintptr_t noRecoil;
 		uintptr_t noReload;
-		uintptr_t checkIsBlipSeen;
-		uintptr_t checkIfAlienHivesAreObstructed;
-		uintptr_t checkIfMinorInterestBlipIsDiscovered;
-		uintptr_t getMinorInterestBlipIcon;
-		uintptr_t checkMissionBlip;
+		uintptr_t showMapCheckIsBlipSeen;
+		uintptr_t showMapCheckAlienHives;
+		uintptr_t showMapCheckMinorInterest;
+		uintptr_t showMapGetMinorInterest;
+		uintptr_t showMapCheckMissionBlip;
 
 		// Fields for the cheats
 		float maxSpeedValue = 2.0f;

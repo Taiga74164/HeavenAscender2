@@ -14,10 +14,12 @@ I made this cheat while I was in class so currently, all features will activate 
 - Infinite Stratagems
 - Infinite Syringe
 - Max Resources
+- Max Movement Speed
 - No Aggro
 - No Laser Overheat
 - No Recoil
 - No Reload
+- Show Map Icons
 
 ### Building
 - Make sure to change the game directory in **Post-Build Event**

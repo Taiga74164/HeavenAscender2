@@ -19,6 +19,7 @@ public:
 	static void PatchBytes(uintptr_t address, const BYTE(&bytes)[N]);
 	static void NopBytes(uintptr_t address, size_t len);
 	static void RestoreBytes(uintptr_t address);
+	static void RestoreBytes(std::initializer_list<uintptr_t> address);
 	static uintptr_t PatternScan(uintptr_t module, const char* signature);
 	static void* AllocateNearbyMemory(uintptr_t address, size_t size);
 	static void CreateTrampoline(uintptr_t address, void* destination, size_t length);

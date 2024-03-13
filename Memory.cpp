@@ -57,6 +57,12 @@ void Memory::RestoreBytes(uintptr_t address)
 	}
 }
 
+void Memory::RestoreBytes(std::initializer_list<uintptr_t> address)
+{
+	for (const auto addr : address)
+		RestoreBytes(addr);
+}
+
 uintptr_t Memory::PatternScan(uintptr_t module, const char* signature)
 {
 	static auto patternToByte = [](const char* pattern)
