@@ -2,12 +2,17 @@
 #include <Windows.h>
 #include <filesystem>
 
+#include "Cheat/FeatureBase.h"
+
 class Core
 {
 public:
 	static void Initialize(HINSTANCE hModule);
 	static void Start();
+	
 private:
+	static std::vector<std::shared_ptr<Cheat::FeatureBase>> m_features;
+	
 	static HMODULE LoadOriginalProxy(const std::filesystem::path& proxyFilepath, const std::wstring& proxyFilepathNoExt);
 	static std::filesystem::path GetModuleFilePath(HMODULE moduleHandle);
 

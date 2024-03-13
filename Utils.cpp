@@ -7,7 +7,7 @@
 #include <format>
 #include <psapi.h>
 
-std::mutex _mutex;
+std::mutex mutex;
 
 namespace Utils
 {
@@ -37,7 +37,7 @@ namespace Utils
 		vsprintf_s(buf, fmt, va);
 		va_end(va);
 
-		const std::lock_guard<std::mutex> lock(_mutex);
+		const std::lock_guard<std::mutex> lock(mutex);
 
 		auto filename = std::filesystem::path(filepath).filename().string();
 		auto logLineConsole = string_format("[%s:%d] %s", filename.c_str(), line, buf);
@@ -55,7 +55,7 @@ namespace Utils
 		vswprintf_s(buf, fmt, va);
 		va_end(va);
 
-		const std::lock_guard<std::mutex> lock(_mutex);
+		const std::lock_guard<std::mutex> lock(mutex);
 
 		auto filename = std::filesystem::path(filepath).filename().string();
 		auto logLineConsole = string_format("[%s:%d] %s", filename.c_str(), line, buf);
@@ -145,13 +145,13 @@ namespace Utils
 		return to_string(GetCurrentProcessNameW());
 	}
 	
-	std::string to_string(std::wstring wstr)
+	std::string to_string(const std::wstring& wstr)
     {
     	std::wstring_convert<std::codecvt_utf8<wchar_t>> strconverter;
     	return strconverter.to_bytes(wstr);
     }
 
-	std::wstring to_wstring(std::string str)
+	std::wstring to_wstring(const std::string& str)
     {
     	std::wstring_convert<std::codecvt_utf8<wchar_t>> strconverter;
     	return strconverter.from_bytes(str);

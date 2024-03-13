@@ -29,6 +29,12 @@ namespace Utils
 	std::wstring GetCurrentProcessNameW();
 	std::string GetCurrentProcessNameA();
 
-	std::string to_string(std::wstring wstr);
-	std::wstring to_wstring(std::string str);
+	std::string to_string(const std::wstring& wstr);
+	std::wstring to_wstring(const std::string& str);
+
+	template<typename T>
+	void SetToHex(T value, uint8_t* hexPtr)
+	{
+		memcpy(hexPtr, &value, sizeof(T));
+	}
 }

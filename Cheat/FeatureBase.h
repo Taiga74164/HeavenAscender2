@@ -13,10 +13,12 @@ namespace Cheat
 		}
 
 		virtual ~FeatureBase() = default;
-
+		
 		virtual void Enable() = 0;
 		virtual void Disable() = 0;
-		std::string GetName() const { return m_name; }
+		virtual void Update() {}
+		[[nodiscard]] std::string GetName() const { return m_name; }
+		[[nodiscard]] bool IsEnabled() const { return m_enabled; }
 		
 	protected:
 		CheatData& m_cheatData;

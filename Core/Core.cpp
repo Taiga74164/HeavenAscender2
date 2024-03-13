@@ -17,16 +17,29 @@
 #include "Cheat/Features/InfiniteStamina.h"
 #include "Cheat/Features/InfiniteStratagems.h"
 #include "Cheat/Features/InfiniteSyringe.h"
+#include "Cheat/Features/MaxSpeed.h"
 #include "Cheat/Features/MaxResources.h"
 #include "Cheat/Features/NoAggro.h"
 #include "Cheat/Features/NoLaserOverheat.h"
 #include "Cheat/Features/NoRecoil.h"
 #include "Cheat/Features/NoReload.h"
 
+std::vector<std::shared_ptr<Cheat::FeatureBase>> Core::m_features;
+
 #define ADD_FEATURE_TOGGLE(TAB, CLASS, CHEAT_DATA) \
+    do { \
+        auto feature = std::make_shared<CLASS>(CHEAT_DATA); \
+        (TAB)->AddElement(std::make_unique<CommandMenu::Toggle>(feature->GetName(), [feature](bool enabled) { enabled ? feature->Enable() : feature->Disable(); })); \
+        if (std::find(m_features.begin(), m_features.end(), feature) == m_features.end()) \
+			m_features.push_back(feature); \
+    } while (false)
+
+#define ADD_FEATURE_SLIDER_FLOAT(TAB, CLASS, CHEAT_DATA, VALUE, MIN, MAX, STEP) \
 	do { \
 		auto feature = std::make_shared<CLASS>(CHEAT_DATA); \
-		(TAB)->AddElement(std::make_unique<CommandMenu::Toggle>(feature->GetName(), [feature](bool enabled) { enabled ? feature->Enable() : feature->Disable(); })); \
+		(TAB)->AddElement(std::make_unique<CommandMenu::SliderFloat>(feature->GetName() + " Value", VALUE, MIN, MAX, STEP)); \
+		if (std::find(m_features.begin(), m_features.end(), feature) == m_features.end()) \
+			m_features.push_back(feature); \
 	} while (false)
 
 void Core::Start()
@@ -55,6 +68,9 @@ void Core::Start()
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteStamina, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteStratagems, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::InfiniteSyringe, cheatData);
+	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::MaxSpeed, cheatData);
+	ADD_FEATURE_SLIDER_FLOAT(featuresTab, Cheat::Features::MaxSpeed, cheatData, &cheatData.maxSpeedValue, 1.0f, 10.0f, 0.5f);
+	
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::MaxResources, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoAggro, cheatData);
 	ADD_FEATURE_TOGGLE(featuresTab, Cheat::Features::NoLaserOverheat, cheatData);
@@ -73,6 +89,11 @@ void Core::Start()
 	while (true)
 	{
 		menu.ProcessInput();
+		for (const auto& features : m_features)
+		{
+			features->Update();
+		}
+		
 		Sleep(50);
 	}
 }
