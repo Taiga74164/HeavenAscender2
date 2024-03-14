@@ -25,6 +25,8 @@
 #include "Cheat/Features/NoReload.h"
 #include "Cheat/Features/ShowMapIcons.h"
 
+#include "Render/Renderer.h"
+
 std::vector<std::shared_ptr<Cheat::FeatureBase>> Core::m_features;
 
 #define ADD_FEATURE_TOGGLE(TAB, CLASS, CHEAT_DATA) \
@@ -50,6 +52,8 @@ void Core::Start()
 		LOG("[HeavenAscender2] game not found, waiting 3 seconds...");
 		Sleep(3000);
 	}
+
+	Init(Renderer::DXVersion::D3D11);
 
 	CommandMenu::Menu menu;
 	Cheat::CheatData cheatData;

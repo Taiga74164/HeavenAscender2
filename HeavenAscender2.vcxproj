@@ -46,7 +46,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\CommandMenu\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\CommandMenu\include\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\detours\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,6 +84,9 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Exports\Exports.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Render\Backend\DX11Hook.cpp" />
+    <ClCompile Include="Render\Backend\DX12Hook.cpp" />
+    <ClCompile Include="Render\Renderer.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="vendor\CommandMenu\src\Menu.cpp" />
     <ClCompile Include="vendor\CommandMenu\src\SliderFloat.cpp" />
@@ -91,6 +94,14 @@
     <ClCompile Include="vendor\CommandMenu\src\Tab.cpp" />
     <ClCompile Include="vendor\CommandMenu\src\Text.cpp" />
     <ClCompile Include="vendor\CommandMenu\src\Toggle.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="vendor\imgui\misc\cpp\imgui_stdlib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cheat\CheatData.h" />
@@ -115,7 +126,11 @@
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Exports\Exports.h" />
     <ClInclude Include="Exports\Resources.h" />
+    <ClInclude Include="HookManager.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Render\Backend\DX11Hook.h" />
+    <ClInclude Include="Render\Backend\DX12Hook.h" />
+    <ClInclude Include="Render\Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Utils.h" />
@@ -127,6 +142,15 @@
     <ClInclude Include="vendor\CommandMenu\include\Tab.h" />
     <ClInclude Include="vendor\CommandMenu\include\Text.h" />
     <ClInclude Include="vendor\CommandMenu\include\Toggle.h" />
+    <ClInclude Include="vendor\detours\detours.h" />
+    <ClInclude Include="vendor\detours\detver.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="vendor\imgui\imconfig.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="vendor\imgui\misc\cpp\imgui_stdlib.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HeavenAscender2.rc" />
@@ -140,6 +164,10 @@
     <MASM Include="Exports\version.asm" />
     <MASM Include="Exports\winhttp.asm" />
     <MASM Include="Exports\winmm.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="vendor\detours\detours-x64.lib" />
+    <Library Include="vendor\detours\detours-x86.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
